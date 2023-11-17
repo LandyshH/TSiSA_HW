@@ -8,35 +8,32 @@ var h = Directory.GetParent(Directory.GetParent(Directory.GetParent(projectDirec
 string filePath = Path.Combine(h, fileName);
 
 var threeDaysFile = Path.Combine(h, "threeDaysFile.csv");
-var daysInMonths = Path.Combine(h, "daysInMonths.csv"); 
+var daysInMonths = Path.Combine(h, "daysInMonths.csv");
 var mondays = Path.Combine(h, "mondays.csv");
 var sundays = Path.Combine(h, "sundays.csv");
 var weekThreeMonths = Path.Combine(h, "weekThreeMonths.csv");
 var allData = Path.Combine(h, "allData.csv");
 
-try
-{
-    var csvReader = new CsvFileReader(filePath);
 
-    var threeDaysResult = csvReader.BuildHourlyStatsForThreeDays();
-    CsvFileWriter.WriteDictionaryToCsv(threeDaysResult, threeDaysFile);
+var csvReader = new CsvFileReader(filePath);
 
-    var daysInMonthsResult = csvReader.BuildDailyMonthStats();
-    CsvFileWriter.WriteDictionaryToCsv(daysInMonthsResult, daysInMonths);
+//var threeDaysResult = csvReader.BuildHourlyStatsForThreeDays();
+//CsvFileWriter.WriteDictionaryToCsv(threeDaysResult, threeDaysFile);
 
-    var mondaysResult = csvReader.BuildWeeklyStats(DayOfWeek.Monday);
-    CsvFileWriter.WriteDictionaryToCsv(mondaysResult, mondays);
+var daysInMonthsResult = csvReader.BuildDailyMonthStats();
+CsvFileWriter.WriteDictionaryToCsv(daysInMonthsResult, daysInMonths);
 
-    var sundaysResult = csvReader.BuildWeeklyStats(DayOfWeek.Sunday);
-    CsvFileWriter.WriteDictionaryToCsv(sundaysResult, sundays);
+var mondaysResult = csvReader.BuildWeeklyStats(DayOfWeek.Monday);
+CsvFileWriter.WriteDictionaryToCsv(mondaysResult, mondays);
 
-    var weekThreeMonthsResult = csvReader.BuildWeeklyStatsThreeMonths();
-    CsvFileWriter.WriteDictionaryToCsv(weekThreeMonthsResult, weekThreeMonths);
+var sundaysResult = csvReader.BuildWeeklyStats(DayOfWeek.Sunday);
+CsvFileWriter.WriteDictionaryToCsv(sundaysResult, sundays);
 
-    var allDataMonths = csvReader.BuildMonthsStats();
-    CsvFileWriter.WriteDictionaryToCsv(allDataMonths, allData);
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Произошла ошибка: {ex.Message}");
-}
+var weekThreeMonthsResult = csvReader.BuildWeeklyStatsThreeMonths();
+CsvFileWriter.WriteDictionaryToCsv(weekThreeMonthsResult, weekThreeMonths);
+
+var allDataMonths = csvReader.BuildMonthsStats();
+CsvFileWriter.WriteDictionaryToCsv(allDataMonths, allData);
+
+//кол-во дней за весь датасет
+var daycCount = csvReader.GetDaysCount();

@@ -53,26 +53,6 @@ public class CsvFileReader
         return requests.Count(r => r.Year == year && r.Month == month);
     }
 
-    public Dictionary<int, int> CountRequestsPerHour()
-    {
-        Dictionary<int, int> requestsPerHour = new Dictionary<int, int>();
-
-        foreach (var request in requests)
-        {
-            int hour = request.Hour;
-
-            if (requestsPerHour.ContainsKey(hour))
-            {
-                requestsPerHour[hour]++;
-            }
-            else
-            {
-                requestsPerHour.Add(hour, 1);
-            }
-        }
-
-        return requestsPerHour;
-    }
     public Dictionary<int, int> BuildHourlyStatsForThreeDays(int yearNumber, int monthNumber)
     {
         Dictionary<int, int> hourlyStats = new Dictionary<int, int>();
@@ -208,5 +188,11 @@ public class CsvFileReader
         }
 
         return stats;
+    }
+
+    public int GetDaysCount()
+    {
+        var h = requests.GroupBy(r => new { r.Year, r.Month, r.Day }).ToArray();
+        return h.Count();
     }
 }
