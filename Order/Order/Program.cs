@@ -17,23 +17,23 @@ var allData = Path.Combine(h, "allData.csv");
 
 var csvReader = new CsvFileReader(filePath);
 
-//var threeDaysResult = csvReader.BuildHourlyStatsForThreeDays();
-//CsvFileWriter.WriteDictionaryToCsv(threeDaysResult, threeDaysFile);
+var threeDaysResult = csvReader.CalculateStatsForEachThreeDays(2023, 3);
+CsvFileWriter.WriteHourlyStatsForThreeDaysToCsv(threeDaysResult, threeDaysFile);
 
-var daysInMonthsResult = csvReader.BuildDailyMonthStats();
-CsvFileWriter.WriteDictionaryToCsv(daysInMonthsResult, daysInMonths);
+//var daysInMonthsResult = csvReader.BuildDailyMonthStats();
+//CsvFileWriter.WriteDictionaryToCsv(daysInMonthsResult, daysInMonths);
 
-var mondaysResult = csvReader.BuildWeeklyStats(DayOfWeek.Monday);
-CsvFileWriter.WriteDictionaryToCsv(mondaysResult, mondays);
+//var mondaysResult = csvReader.BuildWeeklyStats(DayOfWeek.Monday);
+//CsvFileWriter.WriteDictionaryToCsv(mondaysResult, mondays);
 
-var sundaysResult = csvReader.BuildWeeklyStats(DayOfWeek.Sunday);
-CsvFileWriter.WriteDictionaryToCsv(sundaysResult, sundays);
+//var sundaysResult = csvReader.BuildWeeklyStats(DayOfWeek.Sunday);
+//CsvFileWriter.WriteDictionaryToCsv(sundaysResult, sundays);
 
-var weekThreeMonthsResult = csvReader.BuildWeeklyStatsThreeMonths();
-CsvFileWriter.WriteDictionaryToCsv(weekThreeMonthsResult, weekThreeMonths);
+//var weekThreeMonthsResult = csvReader.BuildWeeklyStatsThreeMonths();
+//CsvFileWriter.WriteDictionaryToCsv(weekThreeMonthsResult, weekThreeMonths);
 
-var allDataMonths = csvReader.BuildMonthsStats();
-CsvFileWriter.WriteDictionaryToCsv(allDataMonths, allData);
+//var allDataMonths = csvReader.BuildMonthsStats();
+//CsvFileWriter.WriteDictionaryToCsv(allDataMonths, allData);
 
 //кол-во дней за весь датасет
 var daycCount = csvReader.GetDaysCount();

@@ -21,7 +21,7 @@ public class CsvFileWriter
     {
         using (StreamWriter writer = new StreamWriter(outputFilePath))
         {
-            writer.WriteLine("Day,Hour,Requests");
+            writer.WriteLine("Num,Hour,Requests");
 
             for (int dayIndex = 0; dayIndex < hourlyStatsList.Count; dayIndex++)
             {
