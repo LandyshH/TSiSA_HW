@@ -14,13 +14,13 @@ public class CsvFileReader
 
     private List<DateTime> ReadRequests(string filePath)
     {
-        List<DateTime> requests = new List<DateTime>();
+        var requests = new List<DateTime>();
 
         using (StreamReader reader = new StreamReader(filePath))
         {
             while (!reader.EndOfStream)
             {
-                string line = reader.ReadLine();
+                var line = reader.ReadLine();
 
                 if (DateTime.TryParseExact(line, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime requestTime))
                 {
@@ -56,14 +56,14 @@ public class CsvFileReader
 
     public List<Dictionary<int, int>> CalculateStatsForEachThreeDays(int yearNumber, int monthNumber)
     {
-        List<Dictionary<int, int>> results = new List<Dictionary<int, int>>();
-        int daysInMonth = DateTime.DaysInMonth(yearNumber, monthNumber);
+        var results = new List<Dictionary<int, int>>();
+        var daysInMonth = DateTime.DaysInMonth(yearNumber, monthNumber);
 
         for (int day = 1; day <= daysInMonth - 2; day++)
         {
-            int day1 = day;
-            int day2 = day + 1;
-            int day3 = day + 2;
+            var day1 = day;
+            var day2 = day + 1;
+            var day3 = day + 2;
 
             Dictionary<int, int> hourlyStats = BuildHourlyStatsForThreeDays(yearNumber, monthNumber, day1, day2, day3);
 
@@ -75,13 +75,13 @@ public class CsvFileReader
 
     private Dictionary<int, int> BuildHourlyStatsForThreeDays(int yearNumber, int monthNumber, int day1, int day2, int day3)
     {
-        Dictionary<int, int> hourlyStats = new Dictionary<int, int>();
+        var hourlyStats = new Dictionary<int, int>();
 
-        for (int hour = 1; hour <= 24; hour++)
+        for (var hour = 1; hour <= 24; hour++)
         {
-            int countDay1 = BuildHourlyStatsForDay(yearNumber, monthNumber, day1)[hour];
-            int countDay2 = BuildHourlyStatsForDay(yearNumber, monthNumber, day2)[hour];
-            int countDay3 = BuildHourlyStatsForDay(yearNumber, monthNumber, day3)[hour];
+            var countDay1 = BuildHourlyStatsForDay(yearNumber, monthNumber, day1)[hour];
+            var countDay2 = BuildHourlyStatsForDay(yearNumber, monthNumber, day2)[hour];
+            var countDay3 = BuildHourlyStatsForDay(yearNumber, monthNumber, day3)[hour];
 
 
             hourlyStats.Add(hour, countDay1);
@@ -115,7 +115,7 @@ public class CsvFileReader
 
     public Dictionary<int, int> BuildDailyMonthStats()
     {
-        Dictionary<int, int> dailyStats = new Dictionary<int, int>();
+        var dailyStats = new Dictionary<int, int>();
 
         var groupedRequests = requests
             .Where(r => r.Month == 3 && r.Year == 2023)
@@ -139,7 +139,7 @@ public class CsvFileReader
 
     public Dictionary<int, int> BuildWeeklyStats(int year, int firstMonth, int secondMonth, int thirdMonth,  DayOfWeek dayOfWeek)
     {
-        Dictionary<int, int> weeklyStats = new Dictionary<int, int>();
+        var weeklyStats = new Dictionary<int, int>();
 
         var groupedRequests = requests.Where(r => (r.Month == firstMonth || r.Month == secondMonth || r.Month == thirdMonth) 
                                                     && r.DayOfWeek == dayOfWeek && r.Year == year)
@@ -147,7 +147,7 @@ public class CsvFileReader
                                                     .GetWeekOfYear(new DateTime(r.Year, r.Month, r.Day), CalendarWeekRule.FirstDay, DayOfWeek.Monday))
                                       .ToArray();
 
-        for(var i = 0; i < groupedRequests.Length; i++)
+        for (var i = 0; i < groupedRequests.Length; i++)
         {
 
             if (weeklyStats.ContainsKey(i+1))
@@ -166,14 +166,14 @@ public class CsvFileReader
 
     public Dictionary<int, int> BuildWeeklyStatsThreeMonths(int year, int firstMonth, int secondMonth, int thirdMonth)
     {
-        Dictionary<int, int> weeklyStats = new Dictionary<int, int>();
+        var weeklyStats = new Dictionary<int, int>();
 
         var groupedRequests = requests.Where(r => (r.Month == firstMonth || r.Month == secondMonth || r.Month == thirdMonth) && r.Year == year) 
                                       .GroupBy(r => CultureInfo.CurrentCulture.Calendar
                                                     .GetWeekOfYear(new DateTime(r.Year, r.Month, r.Day), CalendarWeekRule.FirstDay, DayOfWeek.Monday))
                                       .ToArray();
 
-        int startWeek = groupedRequests.Min(group => group.Key);
+        var startWeek = groupedRequests.Min(group => group.Key);
 
         for (var i = 0; i < groupedRequests.Length; i++)
         {
@@ -193,7 +193,7 @@ public class CsvFileReader
 
     public Dictionary<int, int> BuildMonthsStats()
     {
-        Dictionary<int, int> stats = new Dictionary<int, int>();
+        var stats = new Dictionary<int, int>();
 
         var groupedRequests = requests.GroupBy(r => new { r.Year, r.Month }).ToArray();
 

@@ -2,10 +2,10 @@
 using Order;
 
 
-string fileName = "order.csv";
-string projectDirectory = Directory.GetCurrentDirectory();
+var fileName = "order.csv";
+var projectDirectory = Directory.GetCurrentDirectory();
 var h = Directory.GetParent(Directory.GetParent(Directory.GetParent(projectDirectory).FullName).FullName).FullName;
-string filePath = Path.Combine(h, fileName);
+var filePath = Path.Combine(h, fileName);
 
 var threeDaysFile = Path.Combine(h, "threeDaysFile.csv");
 var daysInMonths = Path.Combine(h, "daysInMonths.csv");
