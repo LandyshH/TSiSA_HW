@@ -17,19 +17,19 @@ var allData = Path.Combine(h, "allData.csv");
 
 var csvReader = new CsvFileReader(filePath);
 //тут всё по порядку как в задании дано
-var threeDaysResult = csvReader.CalculateStatsForEachThreeDays(2023, 3);
+var threeDaysResult = csvReader.CalculateStatsForEachThreeDays(2022, 2);
 CsvFileWriter.WriteHourlyStatsForThreeDaysToCsv(threeDaysResult, threeDaysFile);
 
 var daysInMonthsResult = csvReader.BuildDailyMonthStats();
 CsvFileWriter.WriteDictionaryToCsv(daysInMonthsResult, daysInMonths);
 
-var mondaysResult = csvReader.BuildWeeklyStats(2023, 2, 3, 4, DayOfWeek.Monday);
+var mondaysResult = csvReader.BuildWeeklyStats(2022, 1, 2, 3, DayOfWeek.Monday);
 CsvFileWriter.WriteDictionaryToCsv(mondaysResult, mondays);
 
-var sundaysResult = csvReader.BuildWeeklyStats(2023, 2, 3, 4, DayOfWeek.Sunday);
+var sundaysResult = csvReader.BuildWeeklyStats(2022, 1, 2, 3, DayOfWeek.Sunday);
 CsvFileWriter.WriteDictionaryToCsv(sundaysResult, sundays);
 
-var weekThreeMonthsResult = csvReader.BuildWeeklyStatsThreeMonths(2023, 2, 3, 4);
+var weekThreeMonthsResult = csvReader.BuildWeeklyStatsThreeMonths(2022, 1, 2, 3);
 CsvFileWriter.WriteDictionaryToCsv(weekThreeMonthsResult, weekThreeMonths);
 
 var allDataMonths = csvReader.BuildMonthsStats();
