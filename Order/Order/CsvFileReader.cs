@@ -137,11 +137,12 @@ public class CsvFileReader
         return dailyStats;
     }
 
-    public Dictionary<int, int> BuildWeeklyStats(DayOfWeek dayOfWeek)
+    public Dictionary<int, int> BuildWeeklyStats(int year, int firstMonth, int secondMonth, int thirdMonth,  DayOfWeek dayOfWeek)
     {
         Dictionary<int, int> weeklyStats = new Dictionary<int, int>();
 
-        var groupedRequests = requests.Where(r => (r.Month == 2 || r.Month == 3 || r.Month == 4) && r.DayOfWeek == dayOfWeek && r.Year == 2023)
+        var groupedRequests = requests.Where(r => (r.Month == firstMonth || r.Month == secondMonth || r.Month == thirdMonth) 
+                                                    && r.DayOfWeek == dayOfWeek && r.Year == year)
                                       .GroupBy(r => CultureInfo.CurrentCulture.Calendar
                                                     .GetWeekOfYear(new DateTime(r.Year, r.Month, r.Day), CalendarWeekRule.FirstDay, DayOfWeek.Monday))
                                       .ToArray();
@@ -163,13 +164,11 @@ public class CsvFileReader
     }
 
 
-    public Dictionary<int, int> BuildWeeklyStatsThreeMonths()
+    public Dictionary<int, int> BuildWeeklyStatsThreeMonths(int year, int firstMonth, int secondMonth, int thirdMonth)
     {
         Dictionary<int, int> weeklyStats = new Dictionary<int, int>();
 
-        // Группировка заявок по неделям за три месяца
-        // Выбираем данные за март, апрель и февраль
-        var groupedRequests = requests.Where(r => (r.Month == 2 || r.Month == 3 || r.Month == 4) && r.Year == 2023) 
+        var groupedRequests = requests.Where(r => (r.Month == firstMonth || r.Month == secondMonth || r.Month == thirdMonth) && r.Year == year) 
                                       .GroupBy(r => CultureInfo.CurrentCulture.Calendar
                                                     .GetWeekOfYear(new DateTime(r.Year, r.Month, r.Day), CalendarWeekRule.FirstDay, DayOfWeek.Monday))
                                       .ToArray();
